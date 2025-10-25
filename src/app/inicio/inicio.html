@@ -1,0 +1,33 @@
+<div class="inicio-container">
+  <h2>Produtos</h2>
+  
+  @if (carregando) {
+    <div class="carregando">Carregando produtos...</div>
+  }
+  
+  @if (erro) {
+    <div class="erro">
+      Erro ao carregar produtos: {{ erro }}
+    </div>
+  }
+
+  <div class="produtos-grid">
+    @for (produto of produtos; track produto.id) {
+      <div class="produto-card"
+           [routerLink]="['/produto', produto.id]">
+        <h3>{{ produto.nome }}</h3>
+        <p><strong>Marca:</strong> {{ produto.marca }}</p>
+        <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+        <p><strong>Estoque:</strong> {{ produto.quantidade }} unidades</p>
+        <button class="btn-detalhes">Ver Detalhes</button>
+        <hr>
+      </div>
+    }
+  </div>
+
+  @if (produtos.length === 0 && !carregando && !erro) {
+    <div class="sem-produtos">
+      Nenhum produto encontrado.
+    </div>
+  }
+</div>

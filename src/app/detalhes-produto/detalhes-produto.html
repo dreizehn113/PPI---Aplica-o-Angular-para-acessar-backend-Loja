@@ -1,0 +1,57 @@
+<div class="detalhes-container">
+  <button class="btn-voltar" routerLink="/">Voltar para a Loja</button>
+  <div class="pesquisa-container">
+    <h3>Consultar Produto por ID</h3>
+    <div class="pesquisa-form">
+      <input 
+        type="number" 
+        [(ngModel)]="idPesquisa" 
+        placeholder="Digite o ID do produto"
+        (keyup.enter)="pesquisarPorId()">
+      <button (click)="pesquisarPorId()">Buscar</button>
+    </div>
+  </div>
+  @if (carregando) {
+    <div class="carregando">
+      <div class="spinner"></div>
+      Carregando produto...
+    </div>
+  }
+  @if (erro) {
+    <div class="erro">
+      {{ erro }}
+    </div>
+  }
+  @if (produto && !carregando) {
+    <div class="produto-detalhes">
+      <h2>{{ produto.nome }}</h2>
+      <div class="detalhes-info">
+        <div class="info-item">
+          <strong>ID:</strong> {{ produto.id }}
+        </div>
+        <div class="info-item">
+          <strong>Marca:</strong> {{ produto.marca }}
+        </div>
+        <div class="info-item">
+          <strong>Preço:</strong> R$ {{ produto.preco }}
+        </div>
+        <div class="info-item">
+          <strong>Quantidade em estoque:</strong> {{ produto.quantidade }} unidades
+        </div>
+      </div>
+    </div>
+  }
+  @if (!produto && !carregando && !erro && idAtual) {
+    <div class="sem-produto">
+      <h3>Produto não encontrado</h3>
+      <p>Não foi encontrado nenhum produto com o ID <strong>{{ idAtual }}</strong>.</p>
+      <p>Verifique se o ID está entre 1 e 10.</p>
+    </div>
+  }
+  @if (!produto && !carregando && !erro && !idAtual) {
+    <div class="aguardando-pesquisa">
+      <h3>Consulta de Produto</h3>
+      <p>Digite um ID acima para visualizar os detalhes do produto.</p>
+    </div>
+  }
+</div>
